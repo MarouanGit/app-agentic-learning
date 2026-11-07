@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Learning — Assistant d'apprentissage du LMS DATAROCKSTARS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: white;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #007acc 0%, #0051a8 100%);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 48px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 18px;
+      opacity: 0.95;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    section h2 {
+      font-size: 32px;
+      margin-bottom: 24px;
+      color: #007acc;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 12px;
+    }
+
+    section h3 {
+      font-size: 20px;
+      margin: 24px 0 12px 0;
+      color: #333;
+    }
+
+    section p {
+      font-size: 15px;
+      margin-bottom: 12px;
+      line-height: 1.8;
+    }
+
+    section ul {
+      margin-left: 24px;
+      margin-bottom: 12px;
+    }
+
+    section li {
+      margin-bottom: 8px;
+      font-size: 15px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .feature-box {
+      background: #f5f5f5;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #007acc;
+    }
+
+    .feature-box h4 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #007acc;
+    }
+
+    .feature-box p {
+      font-size: 14px;
+      color: #666;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: white;
+    }
+
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    table th {
+      background: #f5f5f5;
+      font-weight: 600;
+      color: #333;
+    }
+
+    table tr:hover {
+      background: #fafafa;
+    }
+
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      color: #d63384;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 16px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #007acc;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      font-weight: 600;
+      margin: 8px 8px 8px 0;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .btn:hover {
+      background: #005a9e;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+    }
+
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+
+    .btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .cta-section {
+      background: linear-gradient(135deg, #007acc 0%, #0051a8 100%);
+      color: white;
+      padding: 40px;
+      border-radius: 8px;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .cta-section h2 {
+      color: white;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .cta-section p {
+      font-size: 16px;
+      margin-bottom: 24px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-section .btn {
+      background: white;
+      color: #007acc;
+      font-weight: 700;
+    }
+
+    .cta-section .btn:hover {
+      background: #f0f0f0;
+    }
+
+    footer {
+      background: #f5f5f5;
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #999;
+      border-top: 1px solid #ddd;
+      margin-top: 60px;
+    }
+
+    .comparison {
+      margin: 24px 0;
+    }
+
+    .comparison table {
+      font-size: 13px;
+    }
+
+    .check {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .cross {
+      color: #dc3545;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    nav a {
+      color: #007acc;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      border-bottom: 2px solid #007acc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🤖 Agentic Learning</h1>
+    <p>Un assistant d'apprentissage qui connaît le contenu du LMS DATAROCKSTARS, en français, avec citations vérifiées et refus motivés.</p>
+  </header>
+
+  <div class="container">
+    <!-- Vision -->
+    <section>
+      <h2>Vision</h2>
+      <p>
+        <strong>Agentic Learning</strong> transforme l'apprentissage en ligne en étant un tuteur toujours disponible qui :
+      </p>
+      <ul>
+        <li><strong>Connaît tout le contenu</strong> du LMS (cours, labs, quizz, exemples)</li>
+        <li><strong>Répond en français</strong> avec citations exactes cliquables</li>
+        <li><strong>Refuse clairement</strong> quand c'est hors programme (6 portes de refus motivés)</li>
+        <li><strong>Adapte son aide</strong> au mode demandé (aide, indice, explication)</li>
+        <li><strong>Autocomplète le code</strong> discrètement dans les éditeurs</li>
+      </ul>
+    </section>
+
+    <!-- Avantages -->
+    <section>
+      <h2>Nos avantages</h2>
+      <div class="comparison">
+        <table>
+          <tr>
+            <th>Critère</th>
+            <th>Optima (concurrent)</th>
+            <th>Agentic Learning</th>
+          </tr>
+          <tr>
+            <td>Langue</td>
+            <td>🇬🇧 Anglais</td>
+            <td><span class="check">✓</span> 🇫🇷 Français</td>
+          </tr>
+          <tr>
+            <td>Catalogue</td>
+            <td>Limité</td>
+            <td><span class="check">✓</span> Tous les programmes</td>
+          </tr>
+          <tr>
+            <td>Transparence</td>
+            <td>Résumé uniquement</td>
+            <td><span class="check">✓</span> Citations cliquables</td>
+          </tr>
+          <tr>
+            <td>Refus motivés</td>
+            <td><span class="cross">✗</span> Implicite</td>
+            <td><span class="check">✓</span> 6 portes explicites</td>
+          </tr>
+          <tr>
+            <td>Labs</td>
+            <td>Démonstration</td>
+            <td><span class="check">✓</span> Vrais labs Jupyter</td>
+          </tr>
+          <tr>
+            <td>Infrastructure</td>
+            <td>API externes (coûts)</td>
+            <td><span class="check">✓</span> Modèles légers sur CPU</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- Démo interactive -->
+    <section>
+      <h2>Studio — Démo interactive</h2>
+      <p>
+        Expérience inspirée d'Optima, mais mieux : tuteur à gauche (réponse + citations), environnement interactif à droite (éditeur + résultats).
+      </p>
+      <p style="margin-bottom: 24px;">
+        <a href="/studio" class="btn">🎬 Ouvrir le Studio</a>
+      </p>
+      <p style="font-size: 13px; color: #999;">
+        Le Studio montre un exercice SQL réel du LMS. Pose des questions au tuteur pour progresser.
+      </p>
+    </section>
+
+    <!-- Contrat API -->
+    <section>
+      <h2>Contrat API</h2>
+
+      <h3>POST /api/ask</h3>
+      <p>Poser une question sur le contenu du LMS.</p>
+      <pre>{
+  "question": "Pourquoi GROUP BY avant WHERE ?",
+  "mode": "aide",
+  "autorises": ["sql-bases"]
+}</pre>
+      <p><strong>Réponse :</strong></p>
+      <pre>{
+  "statut": "reponse",
+  "texte": "En SQL, on utilise WHERE **avant** GROUP BY...",
+  "citations": [{
+    "cours": "sql-bases",
+    "titre": "Ordre des clauses",
+    "url": "https://app-lms.vercel.app/..."
+  }]
+}</pre>
+
+      <h3>POST /api/complete</h3>
+      <p>Autocomplétion de code (Tab, jamais dans exercices notés).</p>
+      <pre>{
+  "langage": "python",
+  "avant": "df.head(",
+  "cours": "pandas-intro"
+}</pre>
+
+      <h3>GET /api/sante</h3>
+      <p>État du service et index.</p>
+
+      <p style="margin-top: 24px;">
+        📖 <a href="/docs">Voir la documentation complète de l'API</a>
+      </p>
+    </section>
+
+    <!-- Les 6 portes de refus -->
+    <section>
+      <h2>Les 6 portes de refus</h2>
+      <p>
+        Agentic Learning ne hallucine pas. À chaque question, 6 filtres vérifient si on peut répondre :
+      </p>
+      <div class="feature-grid">
+        <div class="feature-box">
+          <h4>1️⃣ Requête valide ?</h4>
+          <p>Question vide ou trop générique → refus.</p>
+        </div>
+        <div class="feature-box">
+          <h4>2️⃣ Question assez précise ?</h4>
+          <p>Trop vague, pas de verbe d'action → refus.</p>
+        </div>
+        <div class="feature-box">
+          <h4>3️⃣ Pertinence ?</h4>
+          <p>Aucune leçon pertinente → « Hors programme ».</p>
+        </div>
+        <div class="feature-box">
+          <h4>4️⃣ Contenu exploitable ?</h4>
+          <p>Pertinent, mais aucune citation utilisable → refus.</p>
+        </div>
+        <div class="feature-box">
+          <h4>5️⃣ Accès autorisé ?</h4>
+          <p>Contenu payant/retiré → filtrage selon droits.</p>
+        </div>
+        <div class="feature-box">
+          <h4>6️⃣ Vérification post-réponse ?</h4>
+          <p>Réponse a vraiment utilisé le contenu ?</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feuille de route -->
+    <section>
+      <h2>Feuille de route</h2>
+      <table>
+        <tr>
+          <th>Livraison</th>
+          <th>Titre</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><strong>V0</strong></td>
+          <td>Assistant cité</td>
+          <td>Réponses citées, refus motivés, 3 modes, autocomplétion</td>
+        </tr>
+        <tr>
+          <td><strong>V1</strong></td>
+          <td>Explications au métier</td>
+          <td>Profil apprenant, exemples contextualisés</td>
+        </tr>
+        <tr>
+          <td><strong>V2</strong></td>
+          <td>Retour sur erreurs</td>
+          <td>Diagnostic sans solution, indices gradués</td>
+        </tr>
+        <tr>
+          <td><strong>V3</strong></td>
+          <td>Rythme adaptatif</td>
+          <td>Modèle de maîtrise, micro-leçons, flashcards</td>
+        </tr>
+        <tr>
+          <td><strong>V4</strong></td>
+          <td>Vue formateur</td>
+          <td>Confusions fréquentes, zones à renforcer</td>
+        </tr>
+        <tr>
+          <td><strong>V5</strong></td>
+          <td>Guidage sur capture</td>
+          <td>Apprenant colle screenshot, assistant annote</td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Documentation -->
+    <section>
+      <h2>Documentation</h2>
+      <nav>
+        <a href="/docs#vision">📖 Vision</a>
+        <a href="/docs#architecture">🏗 Architecture</a>
+        <a href="/docs#api">🔌 API</a>
+        <a href="/docs#securite">🔒 Sécurité</a>
+        <a href="/docs#exploitation">⚙️ Exploitation</a>
+        <a href="/docs#evaluation">📊 Évaluation</a>
+      </nav>
+      <p>
+        Tous les détails techniques, de sécurité, d'API et de déploiement sont disponibles dans la documentation.
+      </p>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h2>Prêt à commencer ?</h2>
+      <p>Explorez le Studio pour voir Agentic Learning en action. Accédez à la documentation pour intégrer au LMS.</p>
+      <a href="/studio" class="btn">🎬 Ouvrir le Studio</a>
+      <a href="/docs" class="btn btn-secondary">📚 Documentation</a>
+    </div>
+
+    <!-- Infos techniques -->
+    <section>
+      <h2>Infos techniques</h2>
+      <ul>
+        <li><strong>Modèles :</strong> Qwen2.5 0.5B, e5-small (ONNX, CPU)</li>
+        <li><strong>Latence cible :</strong> &lt;300 ms pour /api/ask</li>
+        <li><strong>Infrastructure :</strong> Vercel Functions (Node.js 24)</li>
+        <li><strong>Authentification :</strong> Bearer token (AGENTIC_SECRET)</li>
+        <li><strong>Index :</strong> BM25 + embeddings denses + ontologie</li>
+        <li><strong>Coûts :</strong> ~$1–3/mois (CPU uniquement)</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer>
+    <p>
+      Agentic Learning v0.1.0 — Produit DATAROCKSTARS •
+      <a href="/docs" style="color: #999; text-decoration: none;">Docs</a> •
+      <a href="/studio" style="color: #999; text-decoration: none;">Studio</a> •
+      <a href="https://github.com/DATAROCKSTARS-BACK-OFFICE/app-agentic-learning" style="color: #999; text-decoration: none;">GitHub</a>
+    </p>
+  </footer>
+</body>
+</html>

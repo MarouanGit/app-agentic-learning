@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "ONNXRUNTIME_NODE_INSTALL_CUDA=skip npm ci --no-audit --no-fund",
+  "buildCommand": "npm run build",
+  "outputDirectory": "public",
+  "regions": ["cdg1"],
+  "functions": {
+    "api/ask.ts": {
+      "memory": 3009,
+      "maxDuration": 120,
+      "includeFiles": "{data/index/**,models/onnx-community/Qwen2.5-0.5B-Instruct/**,models/Xenova/multilingual-e5-small/**}",
+      "excludeFiles": "{node_modules/onnxruntime-node/bin/napi-v3/darwin/**,node_modules/onnxruntime-node/bin/napi-v3/win32/**,node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/**,node_modules/onnxruntime-web/**,models/**/*.partiel}"
+    },
+    "api/complete.ts": {
+      "memory": 3009,
+      "maxDuration": 120,
+      "includeFiles": "{data/index/**,models/onnx-community/Qwen2.5-Coder-0.5B-ONNX/**}",
+      "excludeFiles": "{node_modules/onnxruntime-node/bin/napi-v3/darwin/**,node_modules/onnxruntime-node/bin/napi-v3/win32/**,node_modules/onnxruntime-node/bin/napi-v3/linux/arm64/**,node_modules/onnxruntime-web/**,models/**/*.partiel}"
+    },
+    "api/sante.ts": {
+      "maxDuration": 10,
+      "includeFiles": "data/index/manifeste.json"
+    }
+  },
+  "headers": [
+    { "source": "/api/(.*)", "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }, { "key": "Cache-Control", "value": "no-store" }] }
+  ]
+}

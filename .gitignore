@@ -1,0 +1,10 @@
+# Secrets
+.env*
+# Données exportées du LMS et index construit (contenu payant) : jamais dans git
+data/
+# Modèles ONNX téléchargés au build
+models/
+node_modules/
+.vercel/
+*.partiel
+eval/resultats*.json

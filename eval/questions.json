@@ -1,0 +1,596 @@
+{
+  "description": "Jeu d'évaluation de l'assistant. « dans_programme » : leçons attendues (une seule suffit dans le top 3). « hors_programme » : doivent être refusées. Les questions marquées « controle » ont été ajoutées APRÈS le réglage des seuils (jeu de contrôle, jamais utilisé pour calibrer). « completions » : latence et qualité de /api/complete.",
+  "dans_programme": [
+    {
+      "id": "sql-left-join",
+      "question": "Quelle différence entre INNER JOIN et LEFT JOIN ?",
+      "mode": "aide",
+      "attendues": [
+        "sql-ch06-l02",
+        "da-3-24",
+        "sql-ch06-l01"
+      ]
+    },
+    {
+      "id": "sql-having",
+      "question": "À quoi sert HAVING par rapport à WHERE ?",
+      "mode": "aide",
+      "attendues": [
+        "sql-ch05-l03",
+        "da-3-20",
+        "nc-2-20"
+      ]
+    },
+    {
+      "id": "sql-group-by",
+      "question": "Comment calculer le total des ventes par client avec GROUP BY ?",
+      "mode": "aide",
+      "attendues": [
+        "sql-ch05-l02",
+        "da-3-19",
+        "xd-19-9",
+        "nc-2-20"
+      ]
+    },
+    {
+      "id": "sql-cte",
+      "question": "C'est quoi une CTE avec WITH en SQL ?",
+      "mode": "explique",
+      "attendues": [
+        "sql-ch10-l01",
+        "sql-ch10-l02",
+        "sql-ch10-l03",
+        "xd-20-16",
+        "mtn-5-3-11"
+      ]
+    },
+    {
+      "id": "sql-lag",
+      "question": "Comment comparer une ligne avec la précédente grâce à LAG ?",
+      "mode": "aide",
+      "attendues": [
+        "sql-ch11-l03",
+        "da-3-35"
+      ]
+    },
+    {
+      "id": "sql-fk",
+      "question": "Pourquoi déclarer une clé étrangère entre deux tables ?",
+      "mode": "aide",
+      "attendues": [
+        "da-3-4",
+        "da-3-62",
+        "sql-ch22-l02"
+      ]
+    },
+    {
+      "id": "sql-index",
+      "question": "À quoi sert un index sur une table SQL ?",
+      "mode": "aide",
+      "attendues": [
+        "sql-ch13-l01",
+        "mtn-5-3-13",
+        "sql-ch22-l02"
+      ]
+    },
+    {
+      "id": "py-liste-ajout",
+      "question": "Comment ajouter un élément à la fin d'une liste en Python ?",
+      "mode": "aide",
+      "attendues": [
+        "py-ch05-l03",
+        "py-ch05-l01"
+      ]
+    },
+    {
+      "id": "py-fstring",
+      "question": "Comment insérer une variable dans un texte avec une f-string ?",
+      "mode": "aide",
+      "attendues": [
+        "py-ch03-l02"
+      ]
+    },
+    {
+      "id": "py-dict",
+      "question": "Comment parcourir les clés et les valeurs d'un dictionnaire ?",
+      "mode": "aide",
+      "attendues": [
+        "py-ch11-l01",
+        "xd-2-3"
+      ]
+    },
+    {
+      "id": "py-try",
+      "question": "Comment éviter que mon programme plante avec try et except ?",
+      "mode": "indice",
+      "attendues": [
+        "py-ch14-l01",
+        "da-1-50"
+      ]
+    },
+    {
+      "id": "py-classe",
+      "question": "À quoi sert la méthode __init__ dans une classe ?",
+      "mode": "explique",
+      "attendues": [
+        "py-ch22-l01",
+        "py-ch16-l01",
+        "py-ch22-l01--ch22-l01-ex2"
+      ]
+    },
+    {
+      "id": "py-comprehension",
+      "question": "Comment écrire une compréhension de liste avec une condition ?",
+      "mode": "aide",
+      "attendues": [
+        "py-ch13-l02",
+        "py-ch13-l01"
+      ]
+    },
+    {
+      "id": "py-lambda",
+      "question": "Qu'est-ce qu'une fonction lambda en Python ?",
+      "mode": "aide",
+      "attendues": [
+        "py-ch20-l04"
+      ]
+    },
+    {
+      "id": "pandas-manquantes",
+      "question": "Comment gérer les valeurs manquantes dans un DataFrame pandas ?",
+      "mode": "aide",
+      "attendues": [
+        "mtn-5-4-13",
+        "xd-3-4"
+      ]
+    },
+    {
+      "id": "pandas-groupby",
+      "question": "Comment calculer une moyenne par groupe avec groupby ?",
+      "mode": "aide",
+      "attendues": [
+        "da-4-20",
+        "xd-5-2"
+      ]
+    },
+    {
+      "id": "pbi-calculate",
+      "question": "Que fait la fonction CALCULATE en DAX ?",
+      "mode": "explique",
+      "attendues": [
+        "pbi-12-lab-calculate",
+        "mtn-5-6-4"
+      ]
+    },
+    {
+      "id": "pbi-mesure",
+      "question": "Comment créer ma première mesure DAX dans Power BI ?",
+      "mode": "aide",
+      "attendues": [
+        "pbi-11-lab-mesures",
+        "mtn-2-7-10",
+        "xd-6-9",
+        "mtn-5-6-4"
+      ]
+    },
+    {
+      "id": "pbi-segment",
+      "question": "Dans Power BI, comment un segment interagit-il avec les filtres d'un visuel ?",
+      "mode": "aide",
+      "attendues": [
+        "pbi-10-lab-filtres"
+      ]
+    },
+    {
+      "id": "pbi-modele",
+      "question": "Comment régler les relations du modèle sémantique dans Power BI ?",
+      "mode": "aide",
+      "attendues": [
+        "pbi-6-lab-modele",
+        "da-5-13"
+      ]
+    },
+    {
+      "id": "cm-calendrier",
+      "question": "Comment préparer un calendrier éditorial du mois avec Claude ?",
+      "mode": "aide",
+      "attendues": [
+        "cm-n-1-calendrier"
+      ]
+    },
+    {
+      "id": "cm-memoire",
+      "question": "Dans Claude, à quoi servent la mémoire, les préférences et les styles ?",
+      "mode": "aide",
+      "attendues": [
+        "cm-2-2-memoire"
+      ]
+    },
+    {
+      "id": "cm-personas",
+      "question": "Comment construire des personas à partir d'avis clients avec Claude ?",
+      "mode": "aide",
+      "attendues": [
+        "cm-1-4-voix-client"
+      ]
+    },
+    {
+      "id": "cm-veille",
+      "question": "Comment faire une veille concurrentielle avec la recherche web de Claude ?",
+      "mode": "aide",
+      "attendues": [
+        "cm-1-3-veille"
+      ]
+    },
+    {
+      "id": "nc-zapier",
+      "question": "Quelle différence entre Zapier, Make et n8n ?",
+      "mode": "aide",
+      "attendues": [
+        "nc-5-6",
+        "mtn-lab-2-4-3"
+      ]
+    },
+    {
+      "id": "nc-webhook",
+      "question": "Qu'est-ce qu'un webhook dans une automatisation ?",
+      "mode": "explique",
+      "attendues": [
+        "nc-2-32",
+        "nc-5-19",
+        "nc-5-24",
+        "nc-5-12",
+        "flashcards-architecture-2"
+      ]
+    },
+    {
+      "id": "nc-routeur",
+      "question": "À quoi sert un routeur dans un scénario Make ?",
+      "mode": "aide",
+      "attendues": [
+        "nc-5-15",
+        "nc-lab-5-4"
+      ]
+    },
+    {
+      "id": "nc-lovable",
+      "question": "Comment connecter Lovable à une base Supabase ?",
+      "mode": "aide",
+      "attendues": [
+        "nc-4-15",
+        "nc-lab-4-4"
+      ]
+    },
+    {
+      "id": "nc-rag",
+      "question": "Pourquoi utiliser le RAG avec un LLM sur des documents internes ?",
+      "mode": "aide",
+      "attendues": [
+        "mtn-5-7-16",
+        "nc-5-42",
+        "mtn-5-7-18"
+      ]
+    },
+    {
+      "id": "sh-chmod",
+      "question": "Comment rendre un script exécutable avec chmod ?",
+      "mode": "indice",
+      "attendues": [
+        "sh-ch05-l00"
+      ]
+    },
+    {
+      "id": "sh-grep",
+      "question": "Comment chercher un mot dans un fichier avec grep ?",
+      "mode": "aide",
+      "attendues": [
+        "sh-ch02-l01",
+        "sh-ch08-l05",
+        "xd-1-10"
+      ]
+    },
+    {
+      "id": "sh-pipe",
+      "question": "À quoi sert le pipe | dans le terminal ?",
+      "mode": "aide",
+      "attendues": [
+        "sh-ch03-l00",
+        "sh-ch03-l07"
+      ]
+    },
+    {
+      "id": "dk-volume",
+      "question": "Pourquoi utiliser un volume Docker pour garder les données ?",
+      "mode": "aide",
+      "attendues": [
+        "dk-dch05-l01",
+        "dk-dch05-l02",
+        "xd-28-9"
+      ]
+    },
+    {
+      "id": "dk-compose",
+      "question": "À quoi sert Docker Compose ?",
+      "mode": "explique",
+      "attendues": [
+        "dk-dch07-l01",
+        "xd-28-11",
+        "dk-dch07-l02",
+        "dk-dch07-l03"
+      ]
+    },
+    {
+      "id": "jp-ordre",
+      "question": "Pourquoi l'ordre d'exécution des cellules pose problème dans Jupyter ?",
+      "mode": "aide",
+      "attendues": [
+        "jupyter-4-ordre-execution"
+      ]
+    },
+    {
+      "id": "ml-surapprentissage",
+      "question": "Qu'est-ce que le surapprentissage d'un modèle ?",
+      "mode": "explique",
+      "attendues": [
+        "xd-7-10",
+        "mtn-5-5-6",
+        "xd-13-4",
+        "mtn-lab-5-5-5"
+      ]
+    },
+    {
+      "id": "ml-confusion",
+      "question": "Comment lire une matrice de confusion ?",
+      "mode": "aide",
+      "attendues": [
+        "xd-10-3",
+        "mtn-5-5-23",
+        "nc-6-9"
+      ]
+    },
+    {
+      "id": "ml-validation-croisee",
+      "question": "À quoi sert la validation croisée ?",
+      "mode": "aide",
+      "attendues": [
+        "xd-10-4",
+        "mtn-lab-5-5-5"
+      ]
+    },
+    {
+      "id": "dk-supprimer",
+      "question": "Comment supprimer un conteneur Docker arrêté ?",
+      "mode": "aide",
+      "attendues": [
+        "dk-dch03-l03"
+      ],
+      "controle": true
+    },
+    {
+      "id": "sh-redirection",
+      "question": "Comment écrire la sortie d'une commande dans un fichier sans l'écraser ?",
+      "mode": "aide",
+      "attendues": [
+        "sh-ch03-l01"
+      ],
+      "controle": true
+    },
+    {
+      "id": "pbi-compte",
+      "question": "Comment créer un compte Power BI gratuit ?",
+      "mode": "aide",
+      "attendues": [
+        "pbi-2-compte",
+        "pbi-15-gratuit"
+      ],
+      "controle": true
+    },
+    {
+      "id": "ml-logistique",
+      "question": "Qu'est-ce qu'une régression logistique ?",
+      "mode": "explique",
+      "attendues": [
+        "mtn-5-5-17",
+        "xd-9-2"
+      ],
+      "controle": true
+    },
+    {
+      "id": "git-branche",
+      "question": "Comment créer une branche avec Git ?",
+      "mode": "aide",
+      "attendues": [
+        "xd-1-15",
+        "nc-3-41",
+        "nc-lab-3-11",
+        "xd-term-1-3"
+      ],
+      "controle": true
+    },
+    {
+      "id": "st-streamlit",
+      "question": "À quoi sert Streamlit ?",
+      "mode": "aide",
+      "attendues": [
+        "xd-12-1"
+      ],
+      "controle": true
+    },
+    {
+      "id": "dk-dockerfile",
+      "question": "Comment écrire un Dockerfile ?",
+      "mode": "indice",
+      "attendues": [
+        "dk-dch04-l01",
+        "xd-28-2"
+      ],
+      "controle": true
+    },
+    {
+      "id": "jp-noyau",
+      "question": "Que faire quand le noyau de Jupyter plante ?",
+      "mode": "aide",
+      "attendues": [
+        "jupyter-6-noyau-sauvegarde"
+      ],
+      "controle": true
+    },
+    {
+      "id": "cm-skills",
+      "question": "Comment utiliser des Skills de Claude pour produire des posts LinkedIn ?",
+      "mode": "aide",
+      "attendues": [
+        "cm-2-8-skills-production"
+      ],
+      "controle": true
+    },
+    {
+      "id": "sql-fenetre",
+      "question": "Comment numéroter les lignes avec une fonction de fenêtre ?",
+      "mode": "aide",
+      "attendues": [
+        "da-3-34",
+        "da-3-35"
+      ],
+      "controle": true
+    }
+  ],
+  "hors_programme": [
+    {
+      "id": "hp-capitale",
+      "question": "Quelle est la capitale de l'Australie ?"
+    },
+    {
+      "id": "hp-recette",
+      "question": "Donne-moi une recette de tarte aux pommes."
+    },
+    {
+      "id": "hp-football",
+      "question": "Qui a gagné la Coupe du monde de football en 2018 ?"
+    },
+    {
+      "id": "hp-velo",
+      "question": "Comment réparer la chaîne de mon vélo ?"
+    },
+    {
+      "id": "hp-meteo",
+      "question": "Quel temps fera-t-il demain à Lyon ?"
+    },
+    {
+      "id": "hp-photosynthese",
+      "question": "Explique-moi la photosynthèse des plantes."
+    },
+    {
+      "id": "hp-impots",
+      "question": "Comment remplir ma déclaration d'impôts sur le revenu ?"
+    },
+    {
+      "id": "hp-grippe",
+      "question": "Quels sont les symptômes de la grippe ?"
+    },
+    {
+      "id": "hp-poeme",
+      "question": "Écris-moi un poème sur la mer."
+    },
+    {
+      "id": "hp-echecs",
+      "question": "Quelle est la meilleure ouverture aux échecs ?"
+    },
+    {
+      "id": "hp-moteur",
+      "question": "Comment fonctionne un moteur diesel ?"
+    },
+    {
+      "id": "hp-cobol",
+      "question": "Comment compiler un programme COBOL sur un mainframe IBM z/OS ?"
+    },
+    {
+      "id": "hp-vague",
+      "question": "je comprends pas"
+    },
+    {
+      "id": "hp-vide",
+      "question": "   "
+    },
+    {
+      "id": "hp-tomates",
+      "question": "Comment faire pousser des tomates sur un balcon ?",
+      "controle": true
+    },
+    {
+      "id": "hp-revolution",
+      "question": "En quelle année a eu lieu la Révolution française ?",
+      "controle": true
+    },
+    {
+      "id": "hp-banane",
+      "question": "Combien de calories y a-t-il dans une banane ?",
+      "controle": true
+    },
+    {
+      "id": "hp-pneu",
+      "question": "Comment changer un pneu de voiture ?",
+      "controle": true
+    },
+    {
+      "id": "hp-japonais",
+      "question": "Traduis « bonjour » en japonais.",
+      "controle": true
+    },
+    {
+      "id": "hp-forfait",
+      "question": "Quel est le meilleur forfait mobile en France ?",
+      "controle": true
+    }
+  ],
+  "completions": [
+    {
+      "id": "c-py-moyenne",
+      "langage": "python",
+      "avant": "def moyenne(notes):\n    \"\"\"Renvoie la moyenne d'une liste de notes.\"\"\"\n    ",
+      "apres": "\n\nprint(moyenne([12, 15, 9]))\n"
+    },
+    {
+      "id": "c-py-boucle",
+      "langage": "python",
+      "avant": "fruits = [\"pomme\", \"banane\", \"kiwi\"]\nfor fruit in fruits:\n    ",
+      "apres": ""
+    },
+    {
+      "id": "c-py-pandas",
+      "langage": "python",
+      "avant": "import pandas as pd\n\ndf = pd.read_csv(\"ventes.csv\")\nca_par_client = df.groupby(\"client\")",
+      "apres": "\nprint(ca_par_client.head())\n"
+    },
+    {
+      "id": "c-sql-select",
+      "langage": "sql",
+      "avant": "-- Total des ventes par client\nSELECT client_id, SUM(montant) AS total\nFROM ventes\n",
+      "apres": "\nORDER BY total DESC;"
+    },
+    {
+      "id": "c-sql-join",
+      "langage": "sql",
+      "avant": "SELECT c.nom, co.date_commande\nFROM clients c\nLEFT JOIN commandes co ",
+      "apres": ""
+    },
+    {
+      "id": "c-bash",
+      "langage": "bash",
+      "avant": "#!/bin/bash\n# Compter les lignes ERROR dans app.log\n",
+      "apres": ""
+    },
+    {
+      "id": "c-py-classe",
+      "langage": "python",
+      "avant": "class Livre:\n    def __init__(self, titre, auteur):\n        ",
+      "apres": "\n\n    def __str__(self):\n        return f\"{self.titre} ({self.auteur})\"\n"
+    },
+    {
+      "id": "c-py-fstring",
+      "langage": "python",
+      "avant": "nom = \"Inès\"\nage = 31\nprint(",
+      "apres": ")\n"
+    }
+  ]
+}

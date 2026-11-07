@@ -1,0 +1,28 @@
+{
+  "name": "app-agentic-learning",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agentic Learning : assistant d'apprentissage du LMS DATAROCKSTARS (réponses citées, refus motivés, autocomplétion de code), modèles ONNX sur CPU.",
+  "type": "module",
+  "engines": { "node": "24.x" },
+  "scripts": {
+    "modeles": "tsx scripts/telecharger-modeles.ts",
+    "build": "tsx scripts/telecharger-modeles.ts --verifier-index",
+    "exporter": "tsx --env-file=$HOME/Workspace/lms/.env.vercel-prod.local scripts/exporter.ts",
+    "construire": "tsx scripts/construire.ts",
+    "index": "npm run exporter && npm run construire",
+    "evaluer": "tsx --env-file=.env.local scripts/evaluer.ts",
+    "serveur": "tsx --env-file=.env.local scripts/serveur-local.ts",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "3.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.10.1",
+    "postgres": "3.4.7",
+    "tsx": "4.20.6",
+    "typescript": "5.9.3"
+  }
+}

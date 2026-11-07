@@ -1,0 +1,9 @@
+# Jamais envoyés à Vercel : export brut du LMS, cache local des vecteurs, modèles (téléchargés au build), secrets.
+# data/index/ EST envoyé (index construit en local, lu par les fonctions).
+/data/export
+/data/cache
+/models
+/node_modules
+.env*
+/eval/resultats*.json
+/.git

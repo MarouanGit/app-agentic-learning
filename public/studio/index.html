@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Learning — Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Tuteur (gauche) */
+    .tuteur {
+      flex: 1;
+      background: white;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .tuteur-header {
+      margin-bottom: 24px;
+      border-bottom: 2px solid #007acc;
+      padding-bottom: 12px;
+    }
+
+    .tuteur-header h2 {
+      font-size: 18px;
+      color: #007acc;
+      margin-bottom: 8px;
+    }
+
+    .tuteur-header p {
+      font-size: 12px;
+      color: #999;
+    }
+
+    .tuteur-contenu {
+      flex: 1;
+    }
+
+    .reponse {
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+
+    .reponse p {
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .citations {
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+
+    .citations h4 {
+      font-size: 12px;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .citation {
+      margin-bottom: 12px;
+      padding: 12px;
+      background: #f9f9f9;
+      border-left: 3px solid #007acc;
+      border-radius: 2px;
+      font-size: 13px;
+    }
+
+    .citation-titre {
+      font-weight: 600;
+      color: #007acc;
+      margin-bottom: 4px;
+    }
+
+    .citation-extrait {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+
+    .citation-lien {
+      display: inline-block;
+      font-size: 11px;
+      color: #007acc;
+      text-decoration: none;
+      padding: 4px 8px;
+      background: #e8f3ff;
+      border-radius: 2px;
+    }
+
+    .citation-lien:hover {
+      background: #d0e8ff;
+    }
+
+    .modes {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+      border-top: 1px solid #eee;
+      padding-top: 16px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .mode-btn:hover {
+      border-color: #007acc;
+      color: #007acc;
+    }
+
+    .mode-btn.active {
+      background: #007acc;
+      color: white;
+      border-color: #007acc;
+    }
+
+    /* Environnement interactif (droite) */
+    .environnement {
+      flex: 1;
+      background: white;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .exercice-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #ddd;
+      background: #f9f9f9;
+    }
+
+    .exercice-header h3 {
+      font-size: 16px;
+      margin-bottom: 6px;
+    }
+
+    .exercice-header .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 8px;
+      background: #e8f3ff;
+      color: #007acc;
+      border-radius: 3px;
+    }
+
+    .exercice-corps {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .exercice-consignes {
+      flex: 0 0 35%;
+      border-right: 1px solid #ddd;
+      padding: 20px 24px;
+      overflow-y: auto;
+      background: #fafafa;
+    }
+
+    .exercice-consignes h4 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .exercice-consignes p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .exercice-consignes code {
+      background: white;
+      padding: 2px 4px;
+      border-radius: 2px;
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      color: #d63384;
+    }
+
+    .editeur-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 24px;
+    }
+
+    .editeur-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .editeur {
+      flex: 1;
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.5;
+      resize: none;
+      border: none;
+      overflow-y: auto;
+    }
+
+    .editeur::placeholder {
+      color: #666;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-executer {
+      flex: 1;
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-executer:hover {
+      background: #218838;
+    }
+
+    .btn-soumettre {
+      flex: 1;
+      background: #007acc;
+      color: white;
+    }
+
+    .btn-soumettre:hover {
+      background: #005a9e;
+    }
+
+    .btn-aide {
+      flex: 1;
+      background: #ffc107;
+      color: #333;
+    }
+
+    .btn-aide:hover {
+      background: #ffb300;
+    }
+
+    .resultat {
+      margin-top: 16px;
+      padding: 12px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-family: "Courier New", monospace;
+      font-size: 12px;
+      color: #555;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+
+    .resultat-titre {
+      font-size: 11px;
+      font-weight: 600;
+      color: #666;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .loading {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #007acc;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 6px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .erreur {
+      color: #d32f2f;
+    }
+
+    .succes {
+      color: #388e3c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Tuteur (gauche) -->
+    <div class="tuteur">
+      <div class="tuteur-header">
+        <h2>Tuteur assistant</h2>
+        <p>Mode : <span id="mode-actif">aide</span></p>
+      </div>
+
+      <div class="tuteur-contenu">
+        <div id="reponse-zone" style="display: none;">
+          <div class="reponse">
+            <p id="reponse-texte"></p>
+          </div>
+
+          <div class="citations" id="citations-zone" style="display: none;">
+            <h4>📚 Sources</h4>
+            <div id="citations-liste"></div>
+          </div>
+        </div>
+
+        <div id="chargement" style="text-align: center; color: #999;">
+          <p>Pose une question pour commencer.</p>
+        </div>
+      </div>
+
+      <div class="modes">
+        <button class="mode-btn active" onclick="changerMode('aide')">🤝 Aide</button>
+        <button class="mode-btn" onclick="changerMode('indice')">💡 Indice</button>
+        <button class="mode-btn" onclick="changerMode('explique')">📖 Explique</button>
+      </div>
+    </div>
+
+    <!-- Environnement interactif (droite) -->
+    <div class="environnement">
+      <div class="exercice-header">
+        <h3>Exercice : Agrégations SQL</h3>
+        <div class="tags">
+          <span class="tag">SQL — Les bases</span>
+          <span class="tag">Niveau : Débutant</span>
+        </div>
+      </div>
+
+      <div class="exercice-corps">
+        <!-- Consignes -->
+        <div class="exercice-consignes">
+          <h4>Consignes</h4>
+          <p>
+            Écris une requête SQL qui calcule le <strong>nombre total de ventes par client</strong> dans la table <code>ventes</code>.
+          </p>
+          <p>
+            Ton résultat doit avoir deux colonnes :
+          </p>
+          <ul style="margin-left: 16px; margin-bottom: 12px;">
+            <li><code>client_id</code> — l'ID du client</li>
+            <li><code>total_ventes</code> — le nombre de ventes</li>
+          </ul>
+          <p>
+            <strong>Astuce :</strong> souviens-toi de grouper par client et compter les lignes.
+          </p>
+
+          <!-- Question au tuteur -->
+          <div style="margin-top: 20px; padding: 12px; background: white; border-left: 3px solid #ffc107; border-radius: 2px;">
+            <p style="font-size: 12px; margin-bottom: 8px;"><strong>Tu peux poser une question au tuteur :</strong></p>
+            <input type="text" id="question-input" placeholder="Pose ta question..." style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 2px; font-size: 12px;">
+            <button onclick="poserQuestion()" style="width: 100%; margin-top: 8px; padding: 8px; background: #ffc107; color: #333; border: none; border-radius: 2px; cursor: pointer; font-weight: 600; font-size: 12px;">Poser la question</button>
+          </div>
+        </div>
+
+        <!-- Éditeur -->
+        <div class="editeur-section">
+          <div class="editeur-label">Ton code</div>
+          <textarea class="editeur" id="editeur" placeholder="SELECT&#10;FROM ventes&#10;GROUP BY"></textarea>
+
+          <div class="actions">
+            <button class="btn btn-executer" onclick="executer()">▶ Exécuter</button>
+            <button class="btn btn-soumettre" onclick="soumettre()">✓ Soumettre</button>
+            <button class="btn btn-aide" onclick="demanderAide()">❓ Aide</button>
+          </div>
+
+          <div class="resultat" id="resultat" style="display: none;">
+            <div class="resultat-titre">Résultat</div>
+            <div id="resultat-contenu"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let modeActif = 'aide';
+
+    function changerMode(mode) {
+      modeActif = mode;
+      document.getElementById('mode-actif').textContent = mode;
+      document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function poserQuestion() {
+      const question = document.getElementById('question-input').value.trim();
+      if (!question) return;
+
+      const zone = document.getElementById('reponse-zone');
+      const chargement = document.getElementById('chargement');
+
+      chargement.innerHTML = '<div style="color: #999;"><span class="spinner"></span>En cours...</div>';
+      zone.style.display = 'none';
+
+      // Simulation d'une réponse (en production, appeler /api/ask)
+      setTimeout(() => {
+        const reponses = {
+          'GROUP BY': `En SQL, <strong>GROUP BY</strong> agrège les lignes selon une colonne. C'est comme faire des paquets.
+
+Par exemple, si tu veux compter les ventes par client, tu fais :
+<code>SELECT client_id, COUNT(*) as total_ventes FROM ventes GROUP BY client_id</code>
+
+La magie : GROUP BY <strong>avant</strong> COUNT. D'abord les paquets, ensuite on compte chaque paquet.`,
+
+          'comment': `Les agrégations en SQL permettent de résumer des données. Les principales :
+• <strong>COUNT()</strong> — compter les lignes
+• <strong>SUM()</strong> — faire la somme
+• <strong>AVG()</strong> — calculer la moyenne
+• <strong>MAX(), MIN()</strong> — trouver le max/min
+
+Toujours avec GROUP BY pour regrouper.`,
+        };
+
+        let reponse = reponses['GROUP BY'];
+        if (question.toLowerCase().includes('comment')) reponse = reponses['comment'];
+
+        document.getElementById('reponse-texte').innerHTML = reponse;
+
+        const citations = [
+          {
+            titre: 'Agrégations SQL',
+            cours: 'SQL — Les bases',
+            extrait: 'GROUP BY agrège les résultats par colonne. COUNT(*) compte les lignes.'
+          }
+        ];
+
+        const listeCitations = document.getElementById('citations-liste');
+        listeCitations.innerHTML = citations.map(c => `
+          <div class="citation">
+            <div class="citation-titre">${c.titre}</div>
+            <div class="citation-extrait">"${c.extrait}"</div>
+            <a href="#" class="citation-lien">Aller à la leçon →</a>
+          </div>
+        `).join('');
+
+        document.getElementById('citations-zone').style.display = 'block';
+        chargement.style.display = 'none';
+        zone.style.display = 'block';
+        document.getElementById('question-input').value = '';
+      }, 1000);
+    }
+
+    function demanderAide() {
+      document.getElementById('question-input').value = 'Aide : comment faire GROUP BY ?';
+      poserQuestion();
+    }
+
+    function executer() {
+      const code = document.getElementById('editeur').value;
+      const resultat = document.getElementById('resultat');
+      const contenu = document.getElementById('resultat-contenu');
+
+      if (!code.trim()) {
+        contenu.innerHTML = '<span class="erreur">Erreur : écris du SQL d\'abord.</span>';
+        resultat.style.display = 'block';
+        return;
+      }
+
+      contenu.innerHTML = '<span class="spinner"></span>Exécution...';
+      resultat.style.display = 'block';
+
+      setTimeout(() => {
+        if (code.toLowerCase().includes('group by') && code.toLowerCase().includes('select')) {
+          contenu.innerHTML = `<span class="succes">✓ Succès</span>
+client_id | total_ventes
+----------|-------------
+        1 |           5
+        2 |           3
+        3 |           7`;
+        } else {
+          contenu.innerHTML = `<span class="erreur">✗ Erreur syntaxe</span>
+SQL Error: GROUP BY required with aggregation`;
+        }
+      }, 800);
+    }
+
+    function soumettre() {
+      executer();
+      setTimeout(() => {
+        const contenu = document.getElementById('resultat-contenu').innerHTML;
+        if (contenu.includes('Succès')) {
+          document.getElementById('resultat-contenu').innerHTML += `
+<br><br><strong style="color: #388e3c;">🎉 Bravo !</strong> Ta réponse est correcte.`;
+        }
+      }, 900);
+    }
+  </script>
+</body>
+</html>
