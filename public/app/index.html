@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic Learning — Gestion et Chat</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #007acc;
+      --primary-dark: #005a9e;
+      --secondary: #ffc107;
+      --success: #28a745;
+      --danger: #dc3545;
+      --gray-100: #f5f5f5;
+      --gray-200: #e9ecef;
+      --gray-300: #dee2e6;
+      --gray-400: #ced4da;
+      --gray-500: #adb5bd;
+      --gray-600: #6c757d;
+      --gray-700: #495057;
+      --gray-800: #343a40;
+      --gray-900: #212529;
+    }
+
+    html, body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #f8f9fa;
+      color: var(--gray-800);
+      line-height: 1.6;
+      height: 100vh;
+    }
+
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar Nav */
+    .sidebar {
+      width: 280px;
+      background: var(--gray-900);
+      color: white;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 1px solid var(--gray-700);
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      color: var(--primary);
+    }
+
+    .nav-section {
+      margin-bottom: 30px;
+    }
+
+    .nav-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      padding: 12px 16px;
+      margin-bottom: 4px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 14px;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: var(--gray-800);
+      border-left-color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      border-left-color: var(--secondary);
+    }
+
+    .user-profile {
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-700);
+    }
+
+    .user-info {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .btn-logout {
+      width: 100%;
+      padding: 8px 12px;
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: #c82333;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: white;
+      border-bottom: 1px solid var(--gray-300);
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-size: 24px;
+      color: var(--gray-900);
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--gray-600);
+    }
+
+    .content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    /* Agents Grid */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .agent-card {
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 8px;
+      padding: 20px;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agent-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .agent-card:hover {
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      transform: translateY(-4px);
+    }
+
+    .agent-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .agent-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--gray-900);
+    }
+
+    .agent-desc {
+      font-size: 13px;
+      color: var(--gray-600);
+      margin-bottom: 16px;
+    }
+
+    .agent-meta {
+      font-size: 11px;
+      color: var(--gray-500);
+      padding-top: 12px;
+      border-top: 1px solid var(--gray-200);
+    }
+
+    /* Chat Interface */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .chat-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 20px;
+      border-bottom: 1px solid var(--primary-dark);
+    }
+
+    .chat-header h2 {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .chat-meta {
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 16px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message.user {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .message.assistant {
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .message-bubble {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .message.user .message-bubble {
+      background: var(--primary);
+      color: white;
+      border-radius: 12px 0 12px 12px;
+    }
+
+    .message.assistant .message-bubble {
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 0 12px 12px 12px;
+      color: var(--gray-900);
+    }
+
+    .citations {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+
+    .citation-link {
+      display: inline-block;
+      margin-right: 8px;
+      padding: 4px 8px;
+      background: var(--gray-100);
+      border-left: 2px solid var(--primary);
+      color: var(--primary);
+      text-decoration: none;
+      border-radius: 2px;
+    }
+
+    .chat-input {
+      padding: 16px 20px;
+      background: white;
+      border-top: 1px solid var(--gray-300);
+      display: flex;
+      gap: 12px;
+    }
+
+    .input-field {
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.1);
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--gray-900);
+    }
+
+    .btn-secondary:hover {
+      background: #ffb300;
+    }
+
+    /* Login Screen */
+    .login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    }
+
+    .login-box {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--gray-900);
+    }
+
+    .login-subtitle {
+      font-size: 14px;
+      color: var(--gray-600);
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--gray-700);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.1);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 10px;
+    }
+
+    .btn-login:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 122, 204, 0.3);
+    }
+
+    .error {
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--gray-300);
+    }
+
+    .tab {
+      padding: 12px 20px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-600);
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab:hover {
+      color: var(--gray-900);
+    }
+  </style>
+</head>
+<body>
+  <div class="app" id="app">
+    <!-- Login Screen (initiale) -->
+    <div class="login-screen" id="loginScreen">
+      <div class="login-box">
+        <h1 class="login-title">🤖 Agentic Learning</h1>
+        <p class="login-subtitle">Gestion et chat d'apprentissage</p>
+
+        <div class="tabs">
+          <button class="tab active" onclick="switchTab('login')">Connexion</button>
+          <button class="tab" onclick="switchTab('signup')">Inscription</button>
+        </div>
+
+        <!-- Login -->
+        <div id="loginTab">
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="loginEmail" placeholder="toi@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-input" id="loginPassword" placeholder="••••••">
+          </div>
+          <button class="btn-login" onclick="login()">Se connecter</button>
+          <div class="error" id="loginError"></div>
+        </div>
+
+        <!-- Signup (hidden) -->
+        <div id="signupTab" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Nom</label>
+            <input type="text" class="form-input" id="signupName" placeholder="Ton nom">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" id="signupEmail" placeholder="toi@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Mot de passe</label>
+            <input type="password" class="form-input" id="signupPassword" placeholder="••••••">
+          </div>
+          <button class="btn-login" onclick="signup()">S'inscrire</button>
+          <div class="error" id="signupError"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- App Screen (hidden until login) -->
+    <div id="appScreen" style="display:none; flex:1; display:flex;">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="logo">🎓 Agentic</div>
+
+        <div class="nav-section">
+          <div class="nav-label">Menu</div>
+          <div class="nav-item active" onclick="switchView('dashboard')">
+            📊 Tableau de bord
+          </div>
+          <div class="nav-item" onclick="switchView('agents')">
+            🤖 Mes agents
+          </div>
+          <div class="nav-item" onclick="switchView('chat')">
+            💬 Chat
+          </div>
+          <div class="nav-item" onclick="switchView('settings')">
+            ⚙️ Paramètres
+          </div>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-label">Contextes d'apprentissage</div>
+          <div class="nav-item">📖 SQL Bases</div>
+          <div class="nav-item">🐍 Python</div>
+          <div class="nav-item">💾 Data Science</div>
+          <div class="nav-item">+ Ajouter</div>
+        </div>
+
+        <div class="user-profile">
+          <div class="user-info">
+            Connecté en tant que<br>
+            <strong id="userName">Utilisateur</strong>
+          </div>
+          <button class="btn-logout" onclick="logout()">Déconnexion</button>
+        </div>
+      </div>
+
+      <!-- Main -->
+      <div class="main" style="flex:1;">
+        <div class="header">
+          <div>
+            <h1 id="viewTitle">Tableau de bord</h1>
+            <div class="breadcrumb" id="breadcrumb">Accueil</div>
+          </div>
+        </div>
+
+        <div class="content">
+          <!-- Dashboard -->
+          <div id="dashboardView">
+            <h2 style="margin-bottom:20px;">📊 Tes agents actifs</h2>
+            <div class="agents-grid">
+              <div class="agent-card" onclick="switchView('chat')">
+                <div class="agent-icon">📚</div>
+                <div class="agent-name">SQL Tutor</div>
+                <div class="agent-desc">Assistant pour SQL et agrégations</div>
+                <div class="agent-meta">15 conversations • 2,340 jetons</div>
+              </div>
+              <div class="agent-card" onclick="switchView('chat')">
+                <div class="agent-icon">🐍</div>
+                <div class="agent-name">Python Coach</div>
+                <div class="agent-desc">Aide sur la programmation Python</div>
+                <div class="agent-meta">8 conversations • 1,120 jetons</div>
+              </div>
+              <div class="agent-card" onclick="switchView('chat')">
+                <div class="agent-icon">📊</div>
+                <div class="agent-name">Data Mentor</div>
+                <div class="agent-desc">Guidance sur Data Science</div>
+                <div class="agent-meta">5 conversations • 890 jetons</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat -->
+          <div id="chatView" style="display:none; height:100%;">
+            <div class="chat-container">
+              <div class="chat-header">
+                <h2>📚 SQL Tutor</h2>
+                <div class="chat-meta">Contexte : SQL — Les bases • Leçon : Agrégations</div>
+              </div>
+
+              <div class="chat-messages" id="chatMessages">
+                <div class="message assistant">
+                  <div class="message-bubble">
+                    Salut ! 👋 Je suis ton assistant SQL. Pose-moi une question sur les agrégations, les JOINs, ou n'importe quel concept SQL.
+                  </div>
+                </div>
+              </div>
+
+              <div class="chat-input">
+                <input type="text" class="input-field" id="chatInput" placeholder="Pose ta question..." onkeypress="handleEnter(event)">
+                <button class="btn" onclick="sendMessage()">Envoyer</button>
+                <button class="btn btn-secondary" onclick="askForHint()">💡 Indice</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Agents Management -->
+          <div id="agentsView" style="display:none;">
+            <h2 style="margin-bottom:20px;">🤖 Gestion des agents</h2>
+            <button class="btn" style="margin-bottom:20px;">+ Créer un nouvel agent</button>
+            <div class="agents-grid">
+              <div class="agent-card">
+                <div class="agent-icon">⚙️</div>
+                <div class="agent-name">SQL Tutor</div>
+                <div class="agent-desc">Configuration personnalisée pour SQL</div>
+                <div class="agent-meta">Modèle : Qwen 0.5B • Actif</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div id="settingsView" style="display:none;">
+            <h2>⚙️ Paramètres</h2>
+            <div style="max-width:600px; margin-top:20px;">
+              <div class="form-group">
+                <label class="form-label">Nom d'affichage</label>
+                <input type="text" class="form-input" value="Mon Nom">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" id="settingsEmail">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Modèle par défaut</label>
+                <select class="form-input" style="cursor:pointer;">
+                  <option>Qwen2.5-0.5B (rapide)</option>
+                  <option>Qwen2.5-1.5B (équilibré)</option>
+                  <option>Qwen2.5-3B (précis)</option>
+                </select>
+              </div>
+              <button class="btn" onclick="saveSettings()">Enregistrer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+
+    function switchTab(tab) {
+      document.getElementById('loginTab').style.display = tab === 'login' ? 'block' : 'none';
+      document.getElementById('signupTab').style.display = tab === 'signup' ? 'block' : 'none';
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function login() {
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+
+      if (!email || !password) {
+        document.getElementById('loginError').textContent = 'Email et mot de passe requis';
+        return;
+      }
+
+      // Simulation (sans BDD pour maintenant)
+      currentUser = { email, name: email.split('@')[0] };
+      document.getElementById('userName').textContent = currentUser.email;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appScreen').style.display = 'flex';
+    }
+
+    function signup() {
+      const name = document.getElementById('signupName').value;
+      const email = document.getElementById('signupEmail').value;
+      const password = document.getElementById('signupPassword').value;
+
+      if (!name || !email || !password) {
+        document.getElementById('signupError').textContent = 'Tous les champs requis';
+        return;
+      }
+
+      currentUser = { email, name };
+      document.getElementById('userName').textContent = currentUser.name;
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('appScreen').style.display = 'flex';
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('appScreen').style.display = 'none';
+    }
+
+    function switchView(view) {
+      const views = ['dashboardView', 'chatView', 'agentsView', 'settingsView'];
+      views.forEach(v => document.getElementById(v).style.display = 'none');
+      document.getElementById(view + 'View').style.display = view === 'chat' ? 'flex' : 'block';
+
+      const titles = {
+        dashboard: '📊 Tableau de bord',
+        chat: '💬 Chat',
+        agents: '🤖 Gestion des agents',
+        settings: '⚙️ Paramètres'
+      };
+      document.getElementById('viewTitle').textContent = titles[view];
+
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const message = input.value.trim();
+
+      if (!message) return;
+
+      const messagesDiv = document.getElementById('chatMessages');
+
+      // User message
+      const userMsg = document.createElement('div');
+      userMsg.className = 'message user';
+      userMsg.innerHTML = `<div class="message-bubble">${message}</div>`;
+      messagesDiv.appendChild(userMsg);
+
+      input.value = '';
+
+      // Simulate assistant response
+      setTimeout(() => {
+        const assistantMsg = document.createElement('div');
+        assistantMsg.className = 'message assistant';
+        assistantMsg.innerHTML = `
+          <div class="message-bubble">
+            <strong>GROUP BY</strong> est utilisé pour agréger les données par colonne.
+            Par exemple, pour compter les ventes par client :<br><br>
+            <code>SELECT client_id, COUNT(*) FROM ventes GROUP BY client_id</code><br><br>
+            D'après la leçon « Agrégations », tu vois aussi :
+            <div class="citations">
+              <a href="#" class="citation-link">[1] GROUP BY et agrégations</a>
+            </div>
+          </div>
+        `;
+        messagesDiv.appendChild(assistantMsg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+      }, 500);
+    }
+
+    function askForHint() {
+      document.getElementById('chatInput').value = '💡 J\'ai besoin d\'un indice';
+      sendMessage();
+    }
+
+    function handleEnter(e) {
+      if (e.key === 'Enter') sendMessage();
+    }
+
+    function saveSettings() {
+      alert('Paramètres enregistrés');
+    }
+
+    // Load email in settings
+    if (currentUser) {
+      document.getElementById('settingsEmail').value = currentUser.email;
+    }
+  </script>
+</body>
+</html>
